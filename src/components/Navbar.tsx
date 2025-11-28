@@ -2,27 +2,39 @@
 
 import Link from "next/link";
 import { useState } from "react";
+// Import Image dari Next.js untuk optimasi gambar
+import Image from "next/image"; 
 
 export default function Navbar() {
   const [openMobile, setOpenMobile] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50  backdrop-blur-lg">
+    <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-lg">
       <nav className="relative mx-auto max-w-7xl px-6 py-4 flex items-center text-white">
 
-        {/* Logo - Left */}
+        {/* Logo - Left: Menggunakan Image (picilogo.png) */}
         <Link
           href="/"
-          className="text-purple-400 hover:text-purple-300 transition font-semibold text-lg"
+          className="text-purple-400 hover:text-purple-300 transition font-semibold text-lg flex items-center gap-2"
+          // Menambahkan teks PixieCode sebagai fallback atau label
+          aria-label="PixieCode Home"
         >
-          KholiqDev
+          {/* Menggunakan Image component dari Next.js */}
+          <Image 
+            src="/pixielogo1.png" 
+            alt="PixieCode Logo" 
+            width={32} // Sesuaikan lebar yang diinginkan
+            height={32} // Sesuaikan tinggi yang diinginkan
+            className="rounded-full" // Contoh styling
+          />
+          PixieCode
         </Link>
 
-        {/* Desktop Menu - CENTER */}
+        {/* Desktop Menu - CENTER (Sekarang mencakup semua link Mobile) */}
         <div className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
           <a href="#home" className="hover:text-purple-300 transition">Home</a>
-          <a href="#ABOUT" className="hover:text-purple-300 transition">About</a>
-          <a href="#whitelabel" className="hover:text-purple-300 transition">White-Label</a>    
+          <a href="#ABOUT" className="hover:text-purple-300 transition">About</a> {/* Dipertahankan sebagai ABOUT */}         
+          <a href="#whitelabel" className="hover:text-purple-300 transition">White-Label</a>
           <a href="#contact" className="hover:text-purple-300 transition">Contact</a>
         </div>
 
@@ -30,6 +42,7 @@ export default function Navbar() {
         <button
           onClick={() => setOpenMobile(!openMobile)}
           className="md:hidden text-white focus:outline-none ml-auto"
+          aria-label={openMobile ? "Close menu" : "Open menu"}
         >
           {openMobile ? (
             // Close Icon
@@ -58,17 +71,14 @@ export default function Navbar() {
 
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu (Tetap sama, semua link sudah lengkap) */}
       {openMobile && (
-        <div className="md:hidden bg-black/90 backdrop-blur-xl py-6">
+        <div className="md:hidden  backdrop-blur-xl py-6">
           <div className="flex flex-col gap-5 items-center text-white">
-            <a href="#home" className="hover:text-purple-300 transition">Home</a>
-            <a href="#services" className="hover:text-purple-300 transition">Services</a>
-            <a href="#whitelabel" className="hover:text-purple-300 transition">White-Label</a>
-            <a href="#demo" className="hover:text-purple-300 transition">Demo</a>
-            <a href="#tech" className="hover:text-purple-300 transition">Tech</a>
-            <a href="#faq" className="hover:text-purple-300 transition">FAQ</a>
-            <a href="#contact" className="hover:text-purple-300 transition">Contact</a>
+            <a href="#home" onClick={() => setOpenMobile(false)} className="hover:text-purple-300 transition">Home</a>
+            <a href="#ABOUT" onClick={() => setOpenMobile(false)} className="hover:text-purple-300 transition">About</a>
+            <a href="#whitelabel" onClick={() => setOpenMobile(false)} className="hover:text-purple-300 transition">White-Label</a>
+            <a href="#contact" onClick={() => setOpenMobile(false)} className="hover:text-purple-300 transition">Contact</a>
           </div>
         </div>
       )}

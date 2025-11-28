@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useLayoutEffect } from "react"; 
+import React from "react"; 
+import { motion, useAnimation, Variants } from "framer-motion";
 import { 
     ShieldCheck, Rocket, Paintbrush, Lock, Repeat, Layers3,
     Boxes, DollarSign, LineChart, Wallet, LayoutGrid, Cog
 } from "lucide-react";
 
-// Gabungan semua fitur dan layanan untuk grid yang komprehensif
+// Gabungan semua fitur dan layanan untuk grid yang komprehensif (12 items)
 const allItems = [
-    // ... items ...
     { icon: Rocket, title: "Launch Faster", desc: "Skip months of development with our ready-to-deploy system." },
     { icon: Lock, title: "Secure & Private", desc: "You own 100% source code. No backdoor. No access from us." },
     { icon: Repeat, title: "Scalable System", desc: "Built to scale for thousands of users & transactions." },
@@ -23,135 +23,99 @@ const allItems = [
     { icon: Cog, title: "Custom Contract Integration", desc: "Connect any smart contract to frontend using Wagmi / viem." },
 ];
 
+// Varian animasi shake/goyangan ringan yang berulang
+const shakeVariant: Variants = {
+    shake: {
+        x: [0, 1.5, -1.5, 1.5, -1.5, 0],
+        rotate: [0, 0.5, -0.5, 0.5, -0.5, 0],
+        transition: {
+            x: { duration: 0.2, repeat: Infinity, repeatDelay: 0.1 },
+            rotate: { duration: 0.2, repeat: Infinity, repeatDelay: 0.1 },
+        },
+    },
+    rest: {
+        x: 0,
+        rotate: 0,
+        transition: { duration: 0.3 },
+    },
+};
 
-export default function WhiteLabelParallax() {
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-    const [isMounted, setIsMounted] = useState(false);
+// Komponen terpisah untuk setiap item fitur agar mudah mengelola animasi
+interface FeatureItemProps {
+    icon: React.ElementType;
+    title: string;
+    desc: string;
+    delay: number;
+}
 
-    // MENGGUNAKAN useLayoutEffect untuk mengatur status mounted
-    useLayoutEffect(() => {
-        // [PERBAIKAN] Menambahkan kembali directive ESLint untuk mengabaikan peringatan set-state-in-effect
-        // karena ini adalah pola yang valid untuk mengatasi hydration di sisi klien.
-        // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
-        setIsMounted(true);
-    }, []);
+const FeatureItem: React.FC<FeatureItemProps> = ({ icon: Icon, title, desc, delay }) => {
+    const controls = useAnimation();
 
-    const handleMouseMove = useCallback((e: MouseEvent) => {
-        // Normalisasi posisi mouse dari -0.5 hingga 0.5
-        const x = e.clientX / window.innerWidth - 0.5;
-        const y = e.clientY / window.innerHeight - 0.5;
-        setMousePos({ x, y });
-    }, []);
+    const startShake = () => {
+        controls.start("shake", { duration: 0 }); 
+    };
 
-    useEffect(() => {
-        if (isMounted) {
-            window.addEventListener("mousemove", handleMouseMove);
-            return () => window.removeEventListener("mousemove", handleMouseMove);
-        }
-    }, [handleMouseMove, isMounted]);
-
-    // Fungsi untuk menghitung style Parallax (Translasi berdasarkan Mouse)
-    const styleLayer = (xMul: number, yMul: number, size: number) => {
-        let translateX = 0;
-        let translateY = 0;
-
-        if (isMounted) {
-            // Perhitungan pergerakan Parallax (semakin besar xMul/yMul, semakin jauh bergerak)
-            translateX = mousePos.x * xMul * 100;
-            translateY = mousePos.y * yMul * 100;
-        }
-
-        return {
-            width: `${size}px`,
-            height: `${size}px`,
-            // Tambahkan perpindahan Parallax pada nilai transform
-            transform: `translate(${translateX}px, ${translateY}px)`,
-        } as React.CSSProperties;
+    const stopShake = () => {
+        controls.stop(); 
+        controls.start("rest");
     };
 
     return (
-        <section className="relative w-full py-24 text-white overflow-hidden">
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }} 
+            viewport={{ once: true, amount: 0.8 }}
+            transition={{ duration: 0.5, delay: delay }}
             
-            {/* Parallax layers Container */}
-            <div className="absolute inset-0 pointer-events-none">
-                
-                {/* Layer 1 (Besar, bergerak perlahan) - Kiri Atas */}
-                <div 
-                    className="absolute rounded-full bg-purple-800 opacity-40 will-change-transform blur-3xl"
-                    style={{ 
-                        ...styleLayer(0.2, 0.1, 250), // xMul=0.2, yMul=0.1
-                        top: '15%', 
-                        left: '10%',
-                        transform: `translate(-50%, -50%) ${styleLayer(0.2, 0.1, 250).transform}`
-                    }} 
-                />
-                
-                {/* Layer 2 - Kanan Atas */}
-                <div 
-                    className="absolute rounded-full bg-orange-600 opacity-30 will-change-transform blur-3xl"
-                    style={{ 
-                        ...styleLayer(-0.1, 0.2, 180), // xMul=-0.1, yMul=0.2
-                        top: '20%', 
-                        right: '15%', 
-                        left: 'auto',
-                        transform: `translate(50%, -50%) ${styleLayer(-0.1, 0.2, 180).transform}`
-                    }} 
-                />
-                
-                {/* Layer 3 - Kiri Bawah */}
-                <div 
-                    className="absolute rounded-full bg-purple-600 opacity-20 will-change-transform blur-3xl"
-                    style={{ 
-                        ...styleLayer(0.3, -0.15, 120), // xMul=0.3, yMul=-0.15
-                        bottom: '10%', 
-                        left: '30%', 
-                        top: 'auto',
-                        transform: `translate(-50%, 50%) ${styleLayer(0.3, -0.15, 120).transform}`
-                    }} 
-                />
-                
-                {/* Layer 4 - Kanan Bawah */}
-                <div 
-                    className="absolute rounded-full bg-orange-400 opacity-20 will-change-transform blur-3xl"
-                    style={{ 
-                        ...styleLayer(-0.25, -0.35, 100), // xMul=-0.25, yMul=-0.35
-                        bottom: '25%', 
-                        right: '10%', 
-                        left: 'auto',
-                        top: 'auto',
-                        transform: `translate(50%, 50%) ${styleLayer(-0.25, -0.35, 100).transform}`
-                    }} 
-                />
+            // Animasi Hover
+            onHoverStart={startShake}
+            onHoverEnd={stopShake}
+            animate={controls}
+            variants={shakeVariant}
+            
+            // Menggunakan whileHover Framer Motion untuk scale
+            whileHover={{ scale: 1.02 }}
+            
+            className="p-6 rounded-2xl border border-transparent 
+            bg-white/5 backdrop-blur-sm
+            hover:border-purple-500/50 hover:bg-white/10
+            transition-all duration-300 cursor-pointer" 
+        >
+            <Icon className="w-9 h-9 text-purple-500 mb-4" />
+            <h3 className="font-semibold text-lg mb-2">{title}</h3>
+            <p className="text-gray-400 text-sm">{desc}</p>
+        </motion.div>
+    );
+};
 
-            </div> {/* Penutup absolute inset-0 */}
-
-
+export default function WhiteLabelParallax() {
+    return (
+        <section id="whitelabel" className="relative w-full py-24 text-white overflow-hidden">
             <div className="relative max-w-7xl mx-auto px-6 z-10">
                 
-                {/* HEADLINE SECTION (MENGGANTIKAN LEFT COLUMN) */}
+                {/* HEADLINE SECTION */}
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-6xl font-extrabold leading-tight mb-4">
                         Launch Your Web3 Platform <span className="text-purple-500">In Days.</span>
                     </h2>
 
                     <p className="text-gray-400 text-lg max-w-3xl mx-auto mb-4">
-                        Stop wasting months developing the base layer. Get the complete, secure, and fully-customizable White Label solution deployed under your brand today.
+                        Stop wasting months developing the base layer. Get the complete, secure, and fully-customizable **White Label** solution deployed under your brand today.
                     </p>
                 </div>
 
 
-                {/* FULL FEATURE & SERVICES GRID */}
-                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {allItems.map((item, i) => (
-                        <div
+                {/* FULL FEATURE & SERVICES GRID - Mengubah menjadi 4 Kolom dan 8 Item */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    {/* HANYA RENDER 8 ITEM PERTAMA */}
+                    {allItems.slice(0, 8).map((item, i) => (
+                        <FeatureItem
                             key={i}
-                            className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md
-                            hover:scale-[1.02] hover:border-purple-500/40 transition-all duration-300 cursor-pointer"
-                        >
-                            <item.icon className="w-9 h-9 text-purple-500 mb-4" />
-                            <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
-                            <p className="text-gray-400 text-sm">{item.desc}</p>
-                        </div>
+                            icon={item.icon}
+                            title={item.title}
+                            desc={item.desc}
+                            delay={i * 0.1} // Delay untuk staggered initial appearance
+                        />
                     ))}
                 </div>
 

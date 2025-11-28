@@ -5,6 +5,11 @@ import Footer from "../components/Footer";
 export const metadata = {
   title: "Pixicode — Web3 Developer",
   description: "ICO Web, Token Sale, Staking, Smart Contract Developer",
+  // --- Penambahan Favicon di metadata ---
+  icons: {
+    icon: "/pixirlogo.ico", // Asumsikan file berada di direktori public/
+  },
+  // -------------------------------------
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

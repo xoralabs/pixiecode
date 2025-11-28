@@ -2,10 +2,9 @@
 
 import { motion, Variants, Transition, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import BubbleBackground from "@/components/BubbleBackground"; // Assuming this path is correct
 import { Code, Rocket, Shield, Globe, X } from "lucide-react";
 
-// --- Configuration Data ---
+// --- Configuration Data (tetap sama) ---
 const features = [
     {
         icon: <Code className="w-6 h-6 text-purple-400" />,
@@ -44,7 +43,7 @@ const demoOptions = [
     { label: "Admin Panel/CRM", url: "https://demo-admin.kholiqdev.com/", desc: "Backend dashboard for data management." },
 ];
 
-// --- Framer Motion Variants ---
+// --- Framer Motion Variants (tetap sama) ---
 const loopingVariant: Variants = {
     animate: {
         y: [0, -5, 0],
@@ -63,31 +62,30 @@ const modalVariants: Variants = {
     exit: { opacity: 0, scale: 0.5, y: -50, transition: { duration: 0.3 } },
 };
 
-// --- Live Demo Modal Component ---
+// --- Live Demo Modal Component (tetap sama) ---
 interface DemoModalProps {
     onClose: () => void;
 }
 
 const DemoModal: React.FC<DemoModalProps> = ({ onClose }) => {
-    // Backdrop Overlay & Wrapper
     return (
         <motion.div
             className="fixed inset-0 z-50 bg-black/80 flex justify-center items-center backdrop-blur-sm p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose} // Close modal when clicking outside (backdrop)
+            onClick={onClose}
         >
-            {/* Modal Content */}
+            {/* Modal Content: border dan shadow dihapus */}
             <motion.div
-                className="bg-gray-900 border border-purple-500/30 rounded-3xl p-8 max-w-lg w-full relative shadow-2xl shadow-purple-900/50"
+                className="bg-gray-900 rounded-3xl p-8 max-w-lg w-full relative" 
                 variants={modalVariants}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
+                onClick={(e) => e.stopPropagation()}
             >
-                {/* Close Button */}
+                {/* Close Button (tetap sama) */}
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 p-2 rounded-full text-gray-400 hover:text-white hover:bg-white/10 transition"
@@ -113,7 +111,8 @@ const DemoModal: React.FC<DemoModalProps> = ({ onClose }) => {
                             initial={{ x: -20, opacity: 0 }}
                             animate={{ x: 0, opacity: 1 }}
                             transition={{ delay: index * 0.1 }}
-                            className="flex flex-col p-4 bg-white/5 border border-white/10 rounded-xl hover:border-pink-500/50 transition-all cursor-pointer group"
+                            // Menghapus border, hover border, dan menambahkan hover bg
+                            className="flex flex-col p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all cursor-pointer group" 
                         >
                             <span className="text-lg font-semibold text-white group-hover:text-pink-400 transition-colors">
                                 {demo.label}
@@ -134,53 +133,43 @@ const DemoModal: React.FC<DemoModalProps> = ({ onClose }) => {
 // --- Main Component: AboutSection ---
 // ------------------------------------
 export default function AboutSection() {
-    // State to control pop-up visibility
     const [isModalOpen, setIsModalOpen] = useState(false);
-
-    // Functions to open and close the modal
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
+
+    // Array untuk memberikan nilai X yang berbeda (simulasi random)
+    const featureX = [10, -10, 15, -15]; 
+    const statsX = [5, -5, 8, -8, 5];
 
     return (
         <section
             id="ABOUT"
             className="relative w-full py-28 text-white flex justify-center items-center"
         >
-            <BubbleBackground />
+            {/* BubbleBackground komponen telah dihapus di sini */}
 
             <div className="max-w-6xl mx-auto px-6 text-center relative z-10">
-                {/* Title */}
+                {/* Title (tetap sama) */}
                 <motion.h2
                     initial={{ opacity: 0, y: -20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7 }}
                     className="text-5xl font-bold mb-6 tracking-tight bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"
-                >                   
+                >
+                    About PixieCode
                 </motion.h2>
 
-                {/* Description */}
-                <motion.p
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="text-lg text-gray-300 leading-relaxed max-w-3xl mx-auto"
-                >
-                    PixieCode is a creative Web3 & SaaS development studio focused on
-                    building high-performance digital products. We specialize in
-                    white-label systems for startups, founders, and blockchain projects
-                    that want to launch faster with premium design, strong branding, and
-                    scalable technology.
-                </motion.p>
-
-                {/* Feature cards */}
+                {/* Feature cards: Menambahkan initial X untuk efek random */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-14">
                     {features.map((item, index) => (
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.2 }}
-                            className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 text-left hover:border-purple-500/40 transition"
+                            // Disesuaikan: Menambahkan x berdasarkan featureX[index]
+                            initial={{ opacity: 0, y: 30, x: featureX[index] }}
+                            whileInView={{ opacity: 1, y: 0, x: 0 }}
+                            transition={{ delay: index * 0.15, duration: 0.6 }} // Mengurangi delay untuk feeling yang lebih cepat
+                            // Kelas bg-white/5 dan backdrop-blur-md dipertahankan
+                            className="bg-white/5 backdrop-blur-md rounded-2xl p-6 text-left hover:bg-white/10 transition" 
                         >
                             <div className="flex items-center gap-4 mb-3">
                                 {item.icon}
@@ -193,7 +182,7 @@ export default function AboutSection() {
                     ))}
                 </div>
 
-                {/* Stats section */}
+                {/* Stats section: Menambahkan initial X untuk efek random */}
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
@@ -203,15 +192,17 @@ export default function AboutSection() {
                     {stats.map((stat, index) => (
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            // Disesuaikan: Menambahkan x berdasarkan statsX[index]
+                            initial={{ opacity: 0, y: 30, x: statsX[index] }}
+                            whileInView={{ opacity: 1, y: 0, x: 0 }}
                             transition={{
-                                delay: 0.2 + index * 0.1,
+                                delay: 0.1 + index * 0.1, // Mengurangi delay
                                 duration: 0.5,
                             }}
-                            className="p-6 rounded-2xl bg-gradient-to-br from-purple-600/20 to-pink-600/10 border border-white/10"
+                            // Kelas background tetap sama
+                            className="p-6 rounded-2xl bg-gradient-to-br from-purple-600/20 to-pink-600/10"
                         >
-                            {/* Looping animation on H4 */}
+                            {/* Looping animation on H4 (tetap sama) */}
                             <motion.h4
                                 variants={loopingVariant}
                                 animate="animate"
@@ -227,14 +218,13 @@ export default function AboutSection() {
                     ))}
                 </motion.div>
 
-                {/* CTA */}
+                {/* CTA (tetap sama) */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.8 }}
                     className="mt-16"
                 >
-                    {/* Activate modal on button click */}
                     <button
                         onClick={openModal}
                         className="group px-10 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:scale-105 transition-all shadow-lg shadow-purple-700/40"
@@ -246,7 +236,7 @@ export default function AboutSection() {
                 </motion.div>
             </div>
 
-            {/* Render Modal with AnimatePresence */}
+            {/* Render Modal with AnimatePresence (tetap sama) */}
             <AnimatePresence>
                 {isModalOpen && <DemoModal onClose={closeModal} />}
             </AnimatePresence>
