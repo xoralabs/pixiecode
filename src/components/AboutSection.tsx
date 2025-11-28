@@ -37,7 +37,7 @@ const stats = [
 ];
 
 const demoOptions = [
-    { label: "Landing Page V2", url: "https://demo-v2.kholiqdev.com/", desc: "Modern, performant marketing site." },
+    { label: "Landing Page V2", url: "https://lp.pixiecode.technology/", desc: "Modern, performant marketing site." },
     { label: "Staking DApp", url: "https://demo-staking.kholiqdev.com/", desc: "Complete DeFi Staking platform." },
     { label: "NFT Minting Site", url: "https://demo-nft.kholiqdev.com/", desc: "ERC721/1155 ready minting dapp." },
     { label: "Admin Panel/CRM", url: "https://demo-admin.kholiqdev.com/", desc: "Backend dashboard for data management." },

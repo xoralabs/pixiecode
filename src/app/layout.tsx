@@ -7,7 +7,7 @@ export const metadata = {
   description: "ICO Web, Token Sale, Staking, Smart Contract Developer",
   // --- Penambahan Favicon di metadata ---
   icons: {
-    icon: "/pixirlogo.ico", // Asumsikan file berada di direktori public/
+    icon: "/pixielogo.ico", // Asumsikan file berada di direktori public/
   },
   // -------------------------------------
 };

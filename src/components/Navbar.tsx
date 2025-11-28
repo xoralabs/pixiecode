@@ -12,7 +12,7 @@ export default function Navbar() {
     <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-lg">
       <nav className="relative mx-auto max-w-7xl px-6 py-4 flex items-center text-white">
 
-        {/* Logo - Left: Menggunakan Image (picilogo.png) */}
+        {}
         <Link
           href="/"
           className="text-purple-400 hover:text-purple-300 transition font-semibold text-lg flex items-center gap-2"
@@ -75,10 +75,10 @@ export default function Navbar() {
       {openMobile && (
         <div className="md:hidden  backdrop-blur-xl py-6">
           <div className="flex flex-col gap-5 items-center text-white">
-            <a href="#home" onClick={() => setOpenMobile(false)} className="hover:text-purple-300 transition">Home</a>
-            <a href="#ABOUT" onClick={() => setOpenMobile(false)} className="hover:text-purple-300 transition">About</a>
-            <a href="#whitelabel" onClick={() => setOpenMobile(false)} className="hover:text-purple-300 transition">White-Label</a>
-            <a href="#contact" onClick={() => setOpenMobile(false)} className="hover:text-purple-300 transition">Contact</a>
+            <a href="Home" onClick={() => setOpenMobile(false)} className="hover:text-purple-300 transition">Home</a>
+            <a href="About" onClick={() => setOpenMobile(false)} className="hover:text-purple-300 transition">About</a>
+            <a href="WhiteLabel" onClick={() => setOpenMobile(false)} className="hover:text-purple-300 transition">White-Label</a>
+            <a href="Contact" onClick={() => setOpenMobile(false)} className="hover:text-purple-300 transition">Contact</a>
           </div>
         </div>
       )}
