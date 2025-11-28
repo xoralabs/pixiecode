@@ -32,10 +32,10 @@ export default function Navbar() {
 
         {/* Desktop Menu - CENTER (Sekarang mencakup semua link Mobile) */}
         <div className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
-          <a href="#home" className="hover:text-purple-300 transition">Home</a>
-          <a href="#ABOUT" className="hover:text-purple-300 transition">About</a> {/* Dipertahankan sebagai ABOUT */}         
-          <a href="#whitelabel" className="hover:text-purple-300 transition">White-Label</a>
-          <a href="#contact" className="hover:text-purple-300 transition">Contact</a>
+          <a href="Home" className="hover:text-purple-300 transition">Home</a>
+          <a href="About" className="hover:text-purple-300 transition">About</a> {/* Dipertahankan sebagai ABOUT */}         
+          <a href="WhiteLabel" className="hover:text-purple-300 transition">White-Label</a>
+          <a href="Contact" className="hover:text-purple-300 transition">Contact</a>
         </div>
 
         {/* Mobile Button - Right */}
