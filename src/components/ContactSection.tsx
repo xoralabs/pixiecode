@@ -50,7 +50,7 @@ const contactButtons: ContactButton[] = [
 export default function ContactSection(): React.ReactElement {
     return (
         <section
-            id="contact"
+            id="Contact"
             className="relative py-32 px-6 overflow-hidden"
         >
             <div className="relative max-w-5xl mx-auto text-center z-10">

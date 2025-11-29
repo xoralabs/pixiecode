@@ -143,7 +143,7 @@ export default function AboutSection() {
 
     return (
         <section
-            id="ABOUT"
+            id="About"
             className="relative w-full py-28 text-white flex justify-center items-center"
         >
             {/* BubbleBackground komponen telah dihapus di sini */}

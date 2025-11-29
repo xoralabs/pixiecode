@@ -90,7 +90,7 @@ const FeatureItem: React.FC<FeatureItemProps> = ({ icon: Icon, title, desc, dela
 
 export default function WhiteLabelParallax() {
     return (
-        <section id="whitelabel" className="relative w-full py-24 text-white overflow-hidden">
+        <section id="WhiteLabel" className="relative w-full py-24 text-white overflow-hidden">
             <div className="relative max-w-7xl mx-auto px-6 z-10">
                 
                 {/* HEADLINE SECTION */}
